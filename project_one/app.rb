@@ -30,3 +30,22 @@ post '/visit' do
 
 		erb :message
 end
+
+get '/contacts' do
+	erb :contacts
+end
+
+post '/contacts' do
+
+	@email = params[:email]
+	@message = params[:message]
+
+		@title = "Thank you!"
+		@message = "Привет мы вам в скором времени ответим, #{@email}."
+
+		f = File.open 'public/contacts.txt', 'a'
+		f.write "User: #{@email}, Message: #{@message}.\n"
+		f.close
+
+	erb :message
+end
