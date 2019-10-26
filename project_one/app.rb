@@ -20,12 +20,13 @@ post '/visit' do
 	@username = params[:username]
 	@phone = params[:phone]
 	@datetime = params[:datetime]
+	@barber = params[:barber]
 
 		@title = "Thank you!"
-		@message = "Hello, #{@username} your application has been sent to '#{@datetime}'."
+		@message = "Hello, #{@username} your application has been sent to '#{@datetime}', Barber: #{@barber}."
 
-		f = File.open 'user.txt', 'a'
-		f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}.\n"
+		f = File.open 'public/users.txt', 'a'
+		f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, Barber: #{@barber}.\n"
 		f.close
 
 		erb :message
@@ -49,3 +50,23 @@ post '/contacts' do
 
 	erb :message
 end
+
+get '/login' do
+	erb :login
+end
+
+post '/login' do
+	@login = params[:login]
+	@password = params[:password]
+
+	if @login == "admin" && @password == "karamalesa"
+		@logfile = File.open("public/login.txt","r")
+    	@title = "Hello: '#{@login}'."
+    	erb :message
+	else
+		@error = "Не правельный логин или пароль"
+		erb :login
+	end
+
+end
+
