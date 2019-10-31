@@ -22,6 +22,11 @@ post '/visit' do
 	@barber = params[:barber]
 	@color = params[:color]
 
+	if @username == ""
+		@error = "Введите имя"
+		return erb :visit
+	end
+
 		@title = "Thank you!"
 		@message = "Hello, #{@username} your application has been sent to '#{@datetime}', Barber: #{@barber}, Color: #{@color}."
 
