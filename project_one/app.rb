@@ -26,11 +26,10 @@ post '/visit' do
 			 :phone => 'Введите телефон',
 			 :datetime => 'Введите дату и время'}
 
-	hash.each do |key, value| 
-		if params[key] == '' 
-			@error = hash[key]
-			return erb :visit
-		end
+	@error = hash.select {|key,_| params[key] == ""}.values.join(", ")
+
+	if @error != ""
+		return erb :visit
 	end
 
 	@title = "Thank you!"
