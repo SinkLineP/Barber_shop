@@ -51,6 +51,15 @@ post '/contacts' do
 	@email = params[:email]
 	@message = params[:message]
 
+	hash = { :email => 'Введите ваш EMAIL',
+			 :message => 'Введите ваш ОТЗЫВ'}
+
+	@error = hash.select {|key,_| params[key] == ""}.values.join(", ")
+
+	if @error != ""
+		return erb :contacts
+	end
+
 		@title = "Thank you!"
 		@message = "Привет мы вам в скором времени ответим, #{@email}."
 
