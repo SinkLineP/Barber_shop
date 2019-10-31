@@ -22,19 +22,25 @@ post '/visit' do
 	@barber = params[:barber]
 	@color = params[:color]
 
-	if @username == ""
-		@error = "Введите имя"
-		return erb :visit
+	hash = { :username => 'Введите имя',
+			 :phone => 'Введите телефон',
+			 :datetime => 'Введите дату и время'}
+
+	hash.each do |key, value| 
+		if params[key] == '' 
+			@error = hash[key]
+			return erb :visit
+		end
 	end
 
-		@title = "Thank you!"
-		@message = "Hello, #{@username} your application has been sent to '#{@datetime}', Barber: #{@barber}, Color: #{@color}."
+	@title = "Thank you!"
+	@message = "Hello, #{@username} your application has been sent to '#{@datetime}', Barber: #{@barber}, Color: #{@color}."
 
-		f = File.open 'public/users.txt', 'a'
-		f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, Barber: #{@barber}, Color: #{@color}.\n"
-		f.close
+	f = File.open 'public/users.txt', 'a'
+	f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, Barber: #{@barber}, Color: #{@color}.\n"
+	f.close
 
-		erb :message
+	erb :message
 end
 
 get '/contacts' do
