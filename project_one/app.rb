@@ -16,7 +16,6 @@ get '/visit' do
 end
 
 post '/visit' do 
-	
 	@username = params[:username]
 	@phone = params[:phone]
 	@datetime = params[:datetime]
